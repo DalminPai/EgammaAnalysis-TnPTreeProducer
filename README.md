@@ -1,7 +1,7 @@
 # EgammaAnalysis-TnPTreeProducer
 TnP package for EGM
 
-* The <branchVersion>
+* The [branchVersion]
   Heavy-Neutrino : available in 80X (https://twiki.cern.ch/twiki/bin/view/CMSPublic/ElectronTagAndProbe)
 
 For regular users

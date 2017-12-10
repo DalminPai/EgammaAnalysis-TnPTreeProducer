@@ -44,7 +44,7 @@ varOptions.register(
     )
 
 varOptions.register(
-    "useCalibEn", False,
+    "calibEn", False,
     VarParsing.multiplicity.singleton,
     VarParsing.varType.bool,
 
@@ -110,7 +110,7 @@ options['DoPhoID']              = cms.bool( varOptions.doPhoID   )
 options['OUTPUTEDMFILENAME']    = 'edmFile.root'
 options['DEBUG']                = cms.bool(False)
 options['isMC']                 = cms.bool(False)
-options['UseCalibEn']           = varOptions.useCalibEn
+options['UseCalibEn']           = varOptions.calibEn
 
 if (varOptions.isMC):
     options['isMC']                = cms.bool(True)
@@ -144,12 +144,19 @@ from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import filesMiniAO
 if options['useAOD'] : from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import filesAOD_23Sep2016 as inputs
     
 options['INPUT_FILE_NAME'] = inputs['data']
+
+## Small Sample Test @ KNU ##
+options['INPUT_FILE_NAME'] = cms.untracked.vstring(
+        '/store/user/jskim/00ED7FAC-3540-E711-954F-D067E5F9217B.root'
+        )
+
 if varOptions.isMC:  options['INPUT_FILE_NAME'] =  inputs['mc']
 
 
 ###################################################################
 ## import TnP tree maker pythons and configure for AODs
 ###################################################################
+process.load("TrackingTools/TransientTrack/TransientTrackBuilder_cfi")
 process.load("Configuration.StandardSequences.MagneticField_AutoFromDBCurrent_cff")
 process.load("Configuration.Geometry.GeometryRecoDB_cff")
 #process.load("Configuration.StandardSequences.FrontierConditions_GlobalTag_cff")
@@ -296,7 +303,7 @@ if (not options['DEBUG']):
 
 process.p = cms.Path(
         process.hltFilter         +
-        process.cand_sequence     +
+        process.cand_sequence     + 
         process.tnpPairs_sequence +
         process.mc_sequence       +
         process.eleVarHelper      +
